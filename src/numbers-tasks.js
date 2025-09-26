@@ -50,7 +50,7 @@ function getCircleCircumference(radius) {
  *  -3, 3  => 0
  */
 function getAverage(value1, value2) {
-  return (value1 + value2) / 2;
+  return value1 / 2 + value2 / 2;
 }
 
 /**
@@ -203,11 +203,10 @@ function roundToPowerOfTen(num, pow) {
  *   17 => true
  */
 function isPrime(n) {
-  if (n <= 1) return false; // not prime
-  if (n <= 3) return true; // 2 and 3 are prime
-  if (n % 2 === 0 || n % 3 === 0) return false; // divisible by 2 or 3
+  if (n <= 1) return false;
+  if (n <= 3) return true;
+  if (n % 2 === 0 || n % 3 === 0) return false;
 
-  // check divisibility by numbers of form 6k ± 1 up to sqrt(n)
   for (let i = 5; i * i <= n; i += 6) {
     if (n % i === 0 || n % (i + 2) === 0) return false;
   }
@@ -246,7 +245,7 @@ function toNumber(value, def) {
  *   0  => 0
  */
 function getCube(num) {
-  return num * num * num;
+  return num ** 3;
 }
 
 /**
@@ -266,9 +265,9 @@ function getFibonacciNumber(index) {
   if (index === 0) return 0;
   if (index === 1) return 1;
 
-  let a = 0,
-    b = 1;
-  for (let i = 2; i <= index; i++) {
+  let a = 0;
+  let b = 1;
+  for (let i = 2; i <= index; i += 1) {
     const next = a + b;
     a = b;
     b = next;
@@ -321,7 +320,14 @@ function getSumOfDigits(num) {
  *   15  => false
  */
 function isPowerOfTwo(num) {
-  return num > 0 && (num & (num - 1)) === 0;
+  if (num < 1) return false;
+
+  let n = num;
+  while (n % 2 === 0) {
+    n /= 2;
+  }
+
+  return n === 1;
 }
 
 /**
@@ -428,7 +434,7 @@ function getNumberValue(number) {
  * '5'      => false
  */
 function isNumber(number) {
-  return typeof number === 'number' && isFinite(number);
+  return typeof number === 'number' && Number.isFinite(number);
 }
 
 /**
@@ -457,7 +463,7 @@ function isInteger(number) {
  * 'abcdefgh'      => NaN
  */
 function getFloatOnString(str) {
-  return parseFloat(str);
+  return Number.parseFloat(str);
 }
 
 /**
@@ -475,7 +481,8 @@ function getFloatOnString(str) {
  * '10', 8              => 8
  */
 function getIntegerOnString(str, base) {
-  return parseInt(str, base);
+  const n = Number.parseInt(str, base);
+  return Number.isNaN(n) ? NaN : n;
 }
 
 /**
@@ -564,7 +571,7 @@ function getIntegerPartNumber(number) {
  * 0.1, 0.2, 0.3 => 0.6
  */
 function getSumOfNumbers(x1, x2, x3) {
-  return x1 + x2 + x3;
+  return Number((x1 + x2 + x3).toFixed(10));
 }
 
 /**
@@ -610,7 +617,7 @@ function getRandomInteger(min, max) {
  * 3, 4 => 5
  */
 function getHypotenuse(a, b) {
-  return Math.sqrt(a * a + b * b);
+  return Math.hypot(a, b);
 }
 
 /**
@@ -627,7 +634,8 @@ function getHypotenuse(a, b) {
  * 15 => 8
  */
 function getCountOfOddNumbers(number) {
-  return Math.floor((number + 1) / 2);
+  const n = Math.abs(number);
+  return n % 2 === 0 ? n / 2 : (n + 1) / 2;
 }
 
 module.exports = {
